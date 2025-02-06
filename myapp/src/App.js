@@ -1,23 +1,24 @@
-import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Cart from "./Cart";
-import Home from "./Home";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./Navbar";
+import Home from "./Home";
+import Cart from "./Cart";
+import MyOrders from "./MyOrders";
+import Login from "./Login";
+import Register from "./Register";
 
-const App = () => {
+function App() {
   return (
     <Router>
       <Navbar />
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/cart" element={<Cart />} />
-        
-        <Route path="/orders" element={<h1>My Orders</h1>} />
-        <Route path="/login" element={<h1>Login Page</h1>} />
-        <Route path="/register" element={<h1>Register Page</h1>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/myorders" element={<MyOrders />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );
-};
+}
 
 export default App;
