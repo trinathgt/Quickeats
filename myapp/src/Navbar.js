@@ -1,55 +1,31 @@
-import React, { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa"; // Import hamburger and close icons
-import { Link } from "react-router-dom";
-import { useCart } from "./CartContext"; // Ensure your context is working
-import "./Navbar.css"; // Import CSS for styling
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import './Navbar.css'
 
 const Navbar = () => {
-  const { cart } = useCart();
-  const [menuOpen, setMenuOpen] = useState(false); // State to toggle menu
+  const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove token from localStorage
+    alert("Logged out successfully!");
+    navigate("/login"); // Redirect to login page
+  };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        {/* Logo */}
-        <Link to="/" className="navbar-logo">
-          QuickEats
-        </Link>
+    <nav>
+      <Link to="/">Home</Link>
+      {isAuthenticated && <Link to="/cart">Cart</Link>}
+      {isAuthenticated && <Link to="/myorders">My Orders</Link>}
+      {!isAuthenticated ? (
+        <>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+        </>
+      ) : (
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
 
-        {/* Hamburger Icon for Mobile */}
-        <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <FaTimes /> : <FaBars />}
-        </div>
-
-        {/* Navigation Links */}
-        <ul className={menuOpen ? "nav-menu active" : "nav-menu"}>
-          <li className="nav-item">
-            <Link to="/" className="nav-links" onClick={() => setMenuOpen(false)}>
-              Home
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/cart" className="nav-links" onClick={() => setMenuOpen(false)}>
-              Cart ({cart.length})
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/orders" className="nav-links" onClick={() => setMenuOpen(false)}>
-              My Orders
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/login" className="nav-links" onClick={() => setMenuOpen(false)}>
-              Login
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/register" className="nav-links" onClick={() => setMenuOpen(false)}>
-              Register
-            </Link>
-          </li>
-        </ul>
-      </div>
+      )}
     </nav>
   );
 };

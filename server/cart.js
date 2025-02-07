@@ -15,17 +15,18 @@ router.post("/add", async (req, res) => {
     // Check if item already exists in cart
     let cartItem = await Cart.findOne({ userId, foodId });
     if (cartItem) {
-      cartItem.quantity += quantity;
+      cartItem.quantity += quantity; // Update quantity if item exists
       await cartItem.save();
     } else {
-      cartItem = new Cart({ userId, foodId, quantity });
+      cartItem = new Cart({ userId, foodId, quantity }); // Create new cart item
       await cartItem.save();
     }
 
     res.json({ message: "Item added to cart", cartItem });
 
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
+  }catch (error) {
+      console.error("Error in adding item to cart:", error); // Log the error
+      res.status(500).json({ message: "Server error" });
   }
 });
 

@@ -1,3 +1,4 @@
+// Cart.js
 import React, { useState, useEffect } from "react";
 
 const Cart = () => {
@@ -13,7 +14,7 @@ const Cart = () => {
     try {
       const response = await fetch(`/api/cart/${userId}`);
       const data = await response.json();
-      setCartItems(data.items);
+      setCartItems(data); // Adjusted here if needed
     } catch (error) {
       console.error("Error fetching cart:", error);
     }

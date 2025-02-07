@@ -1,3 +1,4 @@
+// CartContext.js
 import React, { createContext, useContext, useState } from "react";
 
 // Create the Cart Context
@@ -28,11 +29,10 @@ export const CartProvider = ({ children }) => {
 
   // Remove Item from Cart
   const removeFromCart = (id) => {
-    setCart((prevCart) =>
-      prevCart.filter((item) => item.id !== id)
-    );
+    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
+  // Return the context provider with cart and functions
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}

@@ -5,6 +5,7 @@ import Cart from "./Cart";
 import MyOrders from "./MyOrders";
 import Login from "./Login";
 import Register from "./Register";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
@@ -12,10 +13,14 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/myorders" element={<MyOrders />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/myorders" element={<MyOrders />} />
+        </Route>
       </Routes>
     </Router>
   );

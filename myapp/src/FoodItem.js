@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CartContext } from "./CartContext";
+import { CartContext } from "./CartContext"; // Ensure the correct path
 import "./FoodItem.css";
 
 const FoodItem = ({ food }) => {
