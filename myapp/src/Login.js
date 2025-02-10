@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext"; // Import AuthContext
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Get login function from context
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem("token", data.token); // Save token
+        login(data.token, data.userId); // Update authentication state
         alert("Login successful!");
         navigate("/");
       } else {

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { CartContext } from "./CartContext"; // Ensure the correct path
+import { useCart } from "./CartContext";
 import "./FoodItem.css";
 
 const FoodItem = ({ food }) => {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCart();
 
   return (
     <div className="food-card">
