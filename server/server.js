@@ -7,8 +7,8 @@ dotenv.config();
 
 const authRoutes = require("./auth");
 const foodRoutes = require("./food");
-const cartRoutes = require("./cart");
-const orderRoutes = require("./Order");
+const cartRoutes = require("./cartRoute");
+const orderRoutes = require("./order"); // Fixed case sensitivity
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 // ✅ Routes
-app.use("/api/auth", authRoutes);  // Fix: Use `/api/auth` for authentication
+app.use("/api/auth", authRoutes);
 app.use("/api/food", foodRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);

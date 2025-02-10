@@ -1,5 +1,5 @@
 const express = require("express");
-const Order = require("./Order"); // Import Order Model
+const Order = require("./order"); // Import Order Model
 const Cart = require("./Cart_model"); // Import Cart Model
 const FoodItem = require("./FoodItem"); // Import Food Model
 const router = express.Router();

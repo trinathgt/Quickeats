@@ -1,40 +1,53 @@
-// CartContext.js
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-// Create the Cart Context
 const CartContext = createContext();
 
-// Custom Hook to Use Cart
-export const useCart = () => {
-  return useContext(CartContext);
-};
+export const useCart = () => useContext(CartContext);
 
-// Cart Provider Component
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  // Add Item to Cart
-  const addToCart = (food) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === food.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === food.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prevCart, { ...food, quantity: 1 }];
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
+
+  const fetchCartItems = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/cart/${userId}`);
+      const data = await response.json();
+      setCart(data);
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    }
+  };
+
+  const addToCart = async (food) => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("Please login first!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/cart/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, foodId: food._id, quantity: 1 }),
+      });
+
+      if (response.ok) {
+        fetchCartItems(); // Refresh cart after adding an item
       }
-    });
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
   };
 
-  // Remove Item from Cart
-  const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-  };
-
-  // Return the context provider with cart and functions
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart }}>
       {children}
     </CartContext.Provider>
   );

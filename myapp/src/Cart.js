@@ -1,4 +1,3 @@
-// Cart.js
 import React, { useState, useEffect } from "react";
 
 const Cart = () => {
@@ -7,22 +6,22 @@ const Cart = () => {
   const [paymentMethod, setPaymentMethod] = useState("Cash");
 
   useEffect(() => {
-    fetchCartItems();
-  }, []);
+    const fetchCartItems = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/cart/${userId}`);
+        const data = await response.json();
+        setCartItems(data);
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      }
+    };
 
-  const fetchCartItems = async () => {
-    try {
-      const response = await fetch(`/api/cart/${userId}`);
-      const data = await response.json();
-      setCartItems(data); // Adjusted here if needed
-    } catch (error) {
-      console.error("Error fetching cart:", error);
-    }
-  };
+    fetchCartItems();
+  }, [userId]);
 
   const placeOrder = async () => {
     try {
-      const response = await fetch("/api/orders/place", {
+      const response = await fetch("http://localhost:5000/api/orders/place", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -38,7 +37,7 @@ const Cart = () => {
 
       if (response.ok) {
         alert("Order placed successfully!");
-        setCartItems([]); // Clear the cart
+        setCartItems([]); // Clear cart after order placement
       } else {
         alert("Error placing order.");
       }
