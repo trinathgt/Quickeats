@@ -1,0 +1,47 @@
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .swiper {
+    width: 100%;
+    height: 90vh;
+  }
+  
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } 
+  .slide-content{
+    text-align: left;
+   
+   
+  }
+  .swiper-pagination-bullet{
+    background-color: orange;
+  }
+  .slide-content button{
+    font-size: 2em;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 25px;
+    cursor: pointer;
+  }
+  .slide-name{
+    font-size: 3em;
+    color: orange;
+  }
+  .slide-disp{
+    font-size: 2em;
+  }
+  .slide-img{
+    width: 400px;
+  }
